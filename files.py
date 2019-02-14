@@ -1,4 +1,4 @@
-##Задача 1
+#Задача 1
 def read_book(book):
     new_book = {}
     for dish in book:
@@ -23,20 +23,19 @@ def get_shop_list_by_dishes(dishes, person_count, list):
     cook_book = read_book(list)
     for dish in dishes:
         if dish in cook_book:
-            for book_dish, ingridients  in cook_book.items():
-                if book_dish == dish:
-                    for ingridient in ingridients:
-                        if ingridient['ingridient_name'] not in order_list.keys():
-                            key = ingridient['ingridient_name']
-                            value = {'measure': ingridient['measure'], 'quantity': ingridient['quantity'] * person_count}
-                            order_list.update({key : value})
-                        else:
-                            key = ingridient['ingridient_name']
-                            value['quantity'] += ingridient['quantity'] * person_count
-                            order_list.update({key : value})
+            for recipe  in cook_book[dish]:
+                key = recipe['ingridient_name']
+                if recipe['ingridient_name'] not in order_list:
+                    key = recipe['ingridient_name']
+                    value = {'measure': recipe['measure'], 'quantity': recipe['quantity'] * person_count}
+                    order_list.update({key : value})
+                else:
+                    count = order_list[recipe['ingridient_name']]['quantity'] + recipe['quantity']
+                    value = {'measure': recipe['measure'], 'quantity': count * person_count}
+                    order_list.update({key : value})
         else:
             print(f'Выбранное блюдо: {dish} отсутствует в меню')
     return order_list
 
 with open('dishes.txt', encoding='utf8') as list_dishes:
-    print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2, list_dishes))
+    print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 1, list_dishes))
