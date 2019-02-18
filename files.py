@@ -30,12 +30,12 @@ def get_shop_list_by_dishes(dishes, person_count, list):
                     value = {'measure': recipe['measure'], 'quantity': recipe['quantity'] * person_count}
                     order_list.update({key : value})
                 else:
-                    count = order_list[recipe['ingridient_name']]['quantity'] + recipe['quantity']
-                    value = {'measure': recipe['measure'], 'quantity': count * person_count}
+                    count = order_list[recipe['ingridient_name']]['quantity'] + recipe['quantity'] * person_count
+                    value = {'measure': recipe['measure'], 'quantity': count}
                     order_list.update({key : value})
         else:
             print(f'Выбранное блюдо: {dish} отсутствует в меню')
     return order_list
 
 with open('dishes.txt', encoding='utf8') as list_dishes:
-    print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 1, list_dishes))
+    print(get_shop_list_by_dishes(['Фахитос', 'Омлет'], 2, list_dishes))
